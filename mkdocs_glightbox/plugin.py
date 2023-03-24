@@ -107,7 +107,10 @@ class LightboxPlugin(BasePlugin):
         for img in imgs:
             if set(skip_class) & set(img.get("class", [])) or img.parent.name == "a":
                 continue
-            a = soup.new_tag("a")
+            elif img.parent.name != "figure":
+                # only allow for figures
+                continue
+
             a["class"] = "glightbox"
             a["href"] = img.get("src", "")
             a["data-type"] = "image"
