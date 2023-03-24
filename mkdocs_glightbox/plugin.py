@@ -111,6 +111,7 @@ class LightboxPlugin(BasePlugin):
                 # only allow for figures
                 continue
 
+            a = soup.new_tag("a")
             a["class"] = "glightbox"
             a["href"] = img.get("src", "")
             a["data-type"] = "image"
