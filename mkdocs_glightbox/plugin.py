@@ -110,6 +110,13 @@ class LightboxPlugin(BasePlugin):
             elif img.parent.name != "figure":
                 # only allow for figures
                 continue
+            
+            # extract figure caption for lightbox
+            figure_caption = ""
+            if img.parent.name == "figure":
+                figcaption = img.parent.find("figcaption")
+                if figcaption:
+                    figure_caption = figcaption.text
 
             a = soup.new_tag("a")
             a["class"] = "glightbox"
@@ -127,9 +134,9 @@ class LightboxPlugin(BasePlugin):
                         "glightbox.auto_caption" in page.meta
                         and page.meta.get("glightbox.auto_caption", False) is True
                     ):
-                        val = img.get("data-title", img.get("alt", ""))
+                        val = img.get("data-title", img.get("alt", figure_caption))
                     else:
-                        val = img.get("data-title", "")
+                        val = img.get("data-title", figure_caption)
                 elif attr == "data-caption-position":
                     # plugin option caption_position as default
                     val = img.get(
